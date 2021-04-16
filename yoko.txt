@@ -1,0 +1,51 @@
+#  SEND
+#  MORE
+# MONEY
+
+S = 0
+E = 1
+N = 2
+D = 3
+M = 4
+O = 5
+R = 6
+Y = 7
+
+class Node:
+    nd = []
+    def __init__(self,lst):
+        self.nd = lst 
+    def expand(self):
+        result = []
+        lst = self.nd
+        leftnum = set([0,1,2,3,4,5,6,7,8,9]) - set(lst)
+        for num in leftnum:
+            result.append(Node(lst + [ num ]))
+        return result
+    def leafp(self):
+        return len(self.nd) == 8
+    def goalp(self):
+        if self.nd[M] == 0:
+            return False
+        send  =  1000 * self.nd[S] + 100* self.nd[E]  + 10 * self.nd[N] + self.nd[D]
+        more  =  1000 * self.nd[M] + 100 * self.nd[O] + 10 * self.nd[R]  + self.nd[E]
+        money =  10000 * self.nd[M] + 1000 * self.nd[O]  + 100 * self.nd[N] + 10 * self.nd[E] + self.nd[Y]
+        return (send + more) == money
+    def show(self):
+        print('SEND :   ', self.nd[S], self.nd[E], self.nd[N], self.nd[D])
+        print('MORE :   ', self.nd[M], self.nd[O], self.nd[R], self.nd[E])
+        print('MONEY: ',  self.nd[M], self.nd[O], self.nd[N], self.nd[E], self.nd[Y])
+        print('')
+#------------
+
+L = [ Node([]) ]
+while (len(L) != 0):
+    a = L.pop()
+    epd = a.expand()
+    while (len(epd) != 0):
+        b = epd.pop()
+        if b.leafp():
+            if b.goalp():
+                b.show()
+        else:
+            L.append(b)

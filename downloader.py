@@ -33,10 +33,13 @@ if not os.path.isdir(pdf_save_folder):
 os.mkdir(tmp_folder)
 
 # create folder if not exist
+os.chdir(pdf_save_folder)
+exist_past_quest_lst = os.listdir(pdf_save_folder)
 for univ in univ_lst:
-    print(univ)
+    if not univ in exist_past_quest_lst:
+        os.mkdir(univ)
+        save_dest = os.getcwd()
 
-time.sleep(5)
 
 # del tmp folder
 shutil.rmtree(tmp_folder)
