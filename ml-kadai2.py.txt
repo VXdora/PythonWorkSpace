@@ -1,0 +1,16 @@
+import numpy as np
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+wine = datasets.load_wine()
+x = wine.data
+y = wine.target
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.3)
+
+model = LogisticRegression()
+model.fit(xtrain, ytrain)
+
+ans0 = model.predict_proba(xtest)
+ans1 = np.argmax(ans0, axis=1)
+print(sum(ans1 == ytest) / len(ytest)*1.0)
